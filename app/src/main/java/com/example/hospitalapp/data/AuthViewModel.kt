@@ -16,12 +16,13 @@ class AuthViewModel:ViewModel() {
     fun signup(
         username: String,
         email: String,
+        fullname:String,
         password: String,
         confirmpassword: String,
         navController: NavController,
         context: Context
     ) {
-        if (username.isBlank() || email.isBlank() || password.isBlank() || confirmpassword.isBlank()) {
+        if (username.isBlank() || fullname.isBlank()||email.isBlank() || password.isBlank() || confirmpassword.isBlank()) {
             Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_LONG).show()
             return
         }
@@ -32,7 +33,7 @@ class AuthViewModel:ViewModel() {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val userId = auth.currentUser?.uid ?: ""
-                val user = UserModel(username = username, email = email, userId = userId)
+                val user = UserModel(username = username,email = email, userId = userId,fullname=fullname)
 
 
                 saveUserToDatabase(user, navController, context)
